@@ -7,7 +7,12 @@ export default function robots(): MetadataRoute.Robots {
       {
         userAgent: "*",
         allow: "/",
-        disallow: ["/portfolio-showcase", "/portfolio-case-study", "/api/"],
+        disallow: [
+          "/portfolio-showcase",
+          "/portfolio-case-study",
+          "/fiverr-showcase",
+          "/api/",
+        ],
       },
     ],
     sitemap: `${siteConfig.url}/sitemap.xml`,

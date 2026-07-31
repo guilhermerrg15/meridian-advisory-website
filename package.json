@@ -15,6 +15,11 @@
     "portfolio:screenshots": "playwright test tests/e2e/portfolio-screenshots.spec.ts",
     "portfolio:pdf": "playwright test tests/e2e/portfolio-pdf.spec.ts",
     "portfolio:assets": "playwright test tests/e2e/portfolio-screenshots.spec.ts tests/e2e/portfolio-pdf.spec.ts",
+    "fiverr:screenshots": "playwright test --config=playwright.fiverr.config.ts screenshots.spec.ts",
+    "fiverr:gallery": "playwright test --config=playwright.fiverr.config.ts gallery.spec.ts",
+    "fiverr:pdf": "playwright test --config=playwright.fiverr.config.ts pdf.spec.ts",
+    "fiverr:video": "playwright test --config=playwright.fiverr.config.ts video.spec.ts",
+    "fiverr:assets": "npm run build && npm run fiverr:screenshots && npm run fiverr:gallery && npm run fiverr:pdf && npm run fiverr:video",
     "icons": "node scripts/generate-icons.cjs"
   },
   "dependencies": {
@@ -41,6 +46,7 @@
     "eslint": "^9",
     "eslint-config-next": "16.2.12",
     "eslint-config-prettier": "^10.1.8",
+    "ffmpeg-static": "^5.3.0",
     "jsdom": "^30.0.1",
     "prettier": "^3.9.6",
     "tailwindcss": "^4",

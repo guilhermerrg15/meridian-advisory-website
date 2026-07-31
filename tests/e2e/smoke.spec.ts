@@ -33,11 +33,28 @@ test("custom 404 page", async ({ page }) => {
   ).toBeVisible();
 });
 
+test("promotional routes stay out of search engines", async ({ page }) => {
+  const sitemap = await page.goto("/sitemap.xml");
+  const sitemapBody = (await sitemap?.text()) ?? "";
+  expect(sitemapBody).not.toContain("fiverr-showcase");
+  expect(sitemapBody).not.toContain("portfolio-showcase");
+
+  const robots = await page.goto("/robots.txt");
+  const robotsBody = (await robots?.text()) ?? "";
+  expect(robotsBody).toContain("Disallow: /fiverr-showcase");
+
+  await page.goto("/fiverr-showcase", { waitUntil: "domcontentloaded" });
+  await expect(page.locator('meta[name="robots"]')).toHaveAttribute(
+    "content",
+    /noindex/,
+  );
+});
+
 test("contact form shows validation errors", async ({ page }) => {
   await page.goto("/contact", { waitUntil: "networkidle" });
   await expect(page.getByTestId("contact-form")).toBeVisible();
   await page.getByRole("button", { name: /send message/i }).click();
-  await expect(
-    page.getByText(/please enter your full name/i),
-  ).toBeVisible({ timeout: 10000 });
+  await expect(page.getByText(/please enter your full name/i)).toBeVisible({
+    timeout: 10000,
+  });
 });

@@ -46,7 +46,9 @@ src/
     api/contact/       # Simulated contact handler
     portfolio-showcase/
     portfolio-case-study/
+    fiverr-showcase/     # Hidden promo canvases (gallery, PDF, video frames)
   components/
+    fiverr/            # Presentation canvases and CSS device frames
     forms/
     illustrations/
     layout/
@@ -57,7 +59,10 @@ src/
   types/
 portfolio-assets/
   business-website/    # Generated PNG + PDF portfolio assets
+fiverr-assets/
+  business-website/    # Generated Fiverr gallery images, PDF, and clip
 tests/e2e/             # Playwright smoke + asset scripts
+tests/fiverr/          # Playwright exports for the Fiverr material
 scripts/               # Icon generation helpers
 ```
 
@@ -167,19 +172,41 @@ Generate both asset types:
 npm run portfolio:assets
 ```
 
+## How to generate the Fiverr gallery material
+
+```bash
+npm run fiverr:assets
+```
+
+This builds the project, starts the production server on port 3100 so no
+development overlay is captured, and exports every deliverable into
+`fiverr-assets/business-website/`: the 1280×769 main gallery image, two
+supporting slides, five raw browser captures, a three-page PDF case study, and
+a silent 15–22 second MP4 clip. Individual steps are available as
+`fiverr:screenshots`, `fiverr:gallery`, `fiverr:pdf`, and `fiverr:video`.
+
+The clip is recorded as VP8 WebM by Playwright and transcoded to H.264 with the
+`ffmpeg-static` dev dependency. See
+[`fiverr-assets/business-website/README.md`](fiverr-assets/business-website/README.md)
+for the file-by-file reference and the exact conversion command.
+
 ## Available routes
 
-| Route | Purpose |
-| --- | --- |
-| `/` | Home |
-| `/about` | Company story and demo team |
-| `/services` | Four detailed service practices |
-| `/case-studies` | Fictional scenarios + filters |
-| `/contact` | Validated demo contact form |
-| `/privacy` | Privacy policy |
-| `/portfolio-showcase` | Hidden 5-slide presentation |
-| `/portfolio-case-study` | Exportable case study page |
-| Custom 404 | `not-found` page |
+| Route                   | Purpose                                            |
+| ----------------------- | -------------------------------------------------- |
+| `/`                     | Home                                               |
+| `/about`                | Company story and demo team                        |
+| `/services`             | Four detailed service practices                    |
+| `/case-studies`         | Fictional scenarios + filters                      |
+| `/contact`              | Validated demo contact form                        |
+| `/privacy`              | Privacy policy                                     |
+| `/portfolio-showcase`   | Hidden 5-slide presentation                        |
+| `/portfolio-case-study` | Exportable case study page                         |
+| `/fiverr-showcase`      | Hidden promo canvases (gallery, PDF, video frames) |
+| Custom 404              | `not-found` page                                   |
+
+Hidden routes are excluded from the navigation and the sitemap, and are
+disallowed in `robots.txt`.
 
 ## Related docs
 
