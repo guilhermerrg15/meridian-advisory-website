@@ -147,6 +147,10 @@ This opens the hidden route `/portfolio-showcase` and saves:
 - `portfolio-assets/business-website/04-features-and-technology.png`
 - `portfolio-assets/business-website/05-design-system.png`
 
+Slides are authored at 1280×960 CSS pixels and captured at 2× (2560×1920 PNG).
+The 4:3 ratio matches marketplace thumbnail crops such as Fiverr's recommended
+1024×768, so uploads are downscaled rather than cropped.
+
 ## How to export the case-study PDF
 
 ```bash

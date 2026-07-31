@@ -8,6 +8,12 @@ const outputDir = path.join(
   "business-website",
 );
 
+// Slides are authored at 1280x960 (4:3) so marketplace thumbnails that crop to
+// 4:3 (Fiverr recommends 1024x768) never cut off slide content.
+const SLIDE_WIDTH = 1280;
+const SLIDE_HEIGHT = 960;
+const SCALE = 2;
+
 const slides = [
   {
     id: "slide-1",
@@ -31,20 +37,37 @@ const slides = [
   },
 ];
 
+function readPngSize(filePath: string) {
+  const buffer = fs.readFileSync(filePath);
+  return {
+    width: buffer.readUInt32BE(16),
+    height: buffer.readUInt32BE(20),
+  };
+}
+
+test.use({
+  viewport: { width: 1440, height: 1100 },
+  deviceScaleFactor: SCALE,
+});
+
 test("capture portfolio showcase slides", async ({ page }) => {
   fs.mkdirSync(outputDir, { recursive: true });
-  await page.setViewportSize({ width: 1400, height: 900 });
   await page.goto("/portfolio-showcase", { waitUntil: "networkidle" });
 
   for (const slide of slides) {
     const locator = page.locator(`#${slide.id}`);
     await expect(locator).toBeVisible();
+
     const box = await locator.boundingBox();
-    expect(box?.width).toBe(1280);
-    expect(box?.height).toBe(769);
-    await locator.screenshot({
-      path: path.join(outputDir, slide.file),
-      animations: "disabled",
-    });
+    expect(box?.width).toBe(SLIDE_WIDTH);
+    expect(box?.height).toBe(SLIDE_HEIGHT);
+
+    const filePath = path.join(outputDir, slide.file);
+    await locator.screenshot({ path: filePath, animations: "disabled" });
+
+    const size = readPngSize(filePath);
+    expect(size.width).toBe(SLIDE_WIDTH * SCALE);
+    expect(size.height).toBe(SLIDE_HEIGHT * SCALE);
+    expect(size.width / size.height).toBeCloseTo(4 / 3, 5);
   }
 });

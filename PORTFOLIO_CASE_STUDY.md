@@ -28,7 +28,7 @@ A complete multi-page business website designed to look like work that could be 
 - Typed content modules for services, case studies, FAQ, team, and process.
 - Reusable UI primitives and section compositions.
 - Shared Zod validation for contact submissions with a simulated API success path.
-- Hidden portfolio routes that generate PNG slides (1280×769) and a PDF write-up.
+- Hidden portfolio routes that generate PNG slides (1280×960 canvas, exported at 2560×1920 in 4:3) and a PDF write-up.
 
 ## Pages developed
 
