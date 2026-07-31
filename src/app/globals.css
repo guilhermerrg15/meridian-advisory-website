@@ -1,0 +1,94 @@
+@import "tailwindcss";
+
+:root {
+  --canvas: #f8f9fb;
+  --surface: #ffffff;
+  --surface-muted: #f1f4f8;
+  --navy: #0f2744;
+  --cobalt: #2563eb;
+  --cobalt-dark: #1d4ed8;
+  --amber: #f59e0b;
+  --amber-dark: #d97706;
+  --background: var(--canvas);
+  --foreground: var(--navy);
+}
+
+@theme inline {
+  --color-canvas: var(--canvas);
+  --color-surface: var(--surface);
+  --color-surface-muted: var(--surface-muted);
+  --color-navy: var(--navy);
+  --color-cobalt: var(--cobalt);
+  --color-cobalt-dark: var(--cobalt-dark);
+  --color-amber: var(--amber);
+  --color-amber-dark: var(--amber-dark);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-sans), "Segoe UI", sans-serif;
+  --font-display: var(--font-display), Georgia, serif;
+  --shadow-soft: 0 10px 30px -18px rgb(15 39 68 / 0.28);
+  --shadow-lift: 0 24px 50px -28px rgb(15 39 68 / 0.35);
+}
+
+@layer base {
+  * {
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background: var(--canvas);
+    color: var(--navy);
+    font-family: var(--font-sans), "Segoe UI", sans-serif;
+  }
+
+  .font-display {
+    font-family: var(--font-display), Georgia, serif;
+  }
+
+  ::selection {
+    background: color-mix(in oklab, var(--cobalt) 25%, white);
+  }
+}
+
+@layer utilities {
+  .shadow-soft {
+    box-shadow: var(--shadow-soft);
+  }
+
+  .shadow-lift {
+    box-shadow: var(--shadow-lift);
+  }
+
+  @keyframes grow-bar {
+    from {
+      transform: scaleX(0.4);
+      transform-origin: left;
+    }
+    to {
+      transform: scaleX(1);
+      transform-origin: left;
+    }
+  }
+
+  .animate-grow {
+    animation: grow-bar 0.9s ease-out both;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
